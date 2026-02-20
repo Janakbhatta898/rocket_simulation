@@ -72,8 +72,8 @@ private:
 
 public:
     Rocket() {
-        x = 400;
-        y = 500;
+        x =700 ;
+        y = 700;
         velocity = 0;
         fuel = 300;
         separated = false;
@@ -155,7 +155,7 @@ void countdown() {
 
 int main() {
 
-    initwindow(800, 600, "Rocket Launch Simulation");
+    initwindow(1536, 730, "Rocket Launch Simulation");
     putpixel(399, 299, RED);
  
     
