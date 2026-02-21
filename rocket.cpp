@@ -3,6 +3,7 @@
 #include <cmath>
 #include <vector>
 #include <ctime>
+#include <cstdlib>
 
 using namespace std;
 
@@ -14,7 +15,7 @@ public:
     static void drawLineDDA(int x1, int y1, int x2, int y2, int color) {
         float dx = x2 - x1;
         float dy = y2 - y1;
-
+        
         float steps = max(abs(dx), abs(dy));
 
         float Xinc = dx / steps;
@@ -48,6 +49,17 @@ public:
             x++;
         }
     }
+    static void stars(){
+        //rand() % (max - min + 1) + min range[min,max]
+        
+        for (int i=0;i<450;i++){
+            int x=rand()%getmaxx();
+            int y=rand()%getmaxy();
+
+            putpixel(x,y,WHITE);
+        }
+    }
+
 
 private:
     static void plotCirclePoints(int xc, int yc, int x, int y, int color) {
@@ -74,8 +86,8 @@ public:
     Rocket() {
         x =700 ;
         y = 700;
-        velocity = 0;
-        fuel = 300;
+        velocity = 0.5;
+        fuel = 100;
         separated = false;
     }
 
@@ -85,7 +97,7 @@ public:
 
         if (fuel > 0) {
             velocity -= thrust;
-            fuel -= 0.5;
+            fuel -= 1.5;
         }
 
         velocity += gravity;
@@ -111,8 +123,13 @@ private:
     void drawBody() {
         GraphicsEngine::drawLineDDA(x-10, y-40, x+10, y-40, WHITE);
         GraphicsEngine::drawLineDDA(x-10, y+40, x+10, y+40, WHITE);
-        GraphicsEngine::drawLineDDA(x-10, y-40, x-10, y+40, WHITE);
-        GraphicsEngine::drawLineDDA(x+10, y-40, x+10, y+40, WHITE);     
+        GraphicsEngine::drawLineDDA(x-10, y-40, x-10, y+10, WHITE);
+        GraphicsEngine::drawLineDDA(x+10, y-40, x+10, y+10, WHITE);   
+        GraphicsEngine::drawLineDDA(x-10,y+10,x-10,y+40,WHITE);
+        GraphicsEngine::drawLineDDA(x+10,y+10,x+10,y+40,WHITE);
+        GraphicsEngine::drawLineDDA(x-10,y+10,x+10,y+10,WHITE);
+
+
 
        
     }
@@ -168,9 +185,13 @@ int main() {
     countdown();
     cleardevice();
     GraphicsEngine::drawCircle(399, 299, 25, RED);
+    GraphicsEngine::drawCircle(700,700,25,WHITE);
+
+   
 
     while (true) {
         cleardevice();
+        GraphicsEngine::stars();
         rocket.update();
         rocket.draw();
         delay(200);
